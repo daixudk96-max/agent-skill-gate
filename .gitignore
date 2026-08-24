@@ -1,0 +1,26 @@
+# 运行时状态（step-gate 状态机）
+.step-gate/
+# Python 缓存
+__pycache__/
+*.pyc
+# 第三方克隆（含嵌套 .git）
+/research/third-party/
+/research/SkillOpt/
+/research/clones/
+/research/runx/
+/research/skills/
+
+# ---- 工作区开发资产（本地开发用，不入公开仓库）----
+# 注意：模式带前导斜杠锚定仓库根，避免误伤 skills/step-gate/ 内部同名目录
+/dist/
+/design/
+/docs/
+/research/
+/tools/
+/skills-src/
+/step-gate/
+/.trellis/
+/todos.md
+/*.html
+/.agents/
+/.claude/

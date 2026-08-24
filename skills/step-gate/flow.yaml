@@ -1,0 +1,24 @@
+skill: step-gate
+version: 0.1.0
+steps:
+  - id: understand
+    title: 理解目标 skill
+    description: 定位目标 skill 目录，阅读其 SKILL.md 确定步骤边界与产物
+    guide: guides/understand.md
+    validators:
+      - type: non-empty
+        path: notes/understanding.md
+  - id: operate
+    title: 改造并治理
+    description: 运行 skill-converter 生成母包，编辑 flow.yaml validators 与 guides 必达内容
+    guide: guides/operate.md
+    validators:
+      - type: non-empty
+        path: notes/operation-log.md
+  - id: package
+    title: 验收并分发
+    description: 用 status/next/complete 验收，再用 skill-pack 生成多 agent 分发包
+    guide: guides/package.md
+    validators:
+      - type: non-empty
+        path: notes/package-log.md
