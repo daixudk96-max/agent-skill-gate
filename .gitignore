@@ -24,3 +24,5 @@ __pycache__/
 /*.html
 /.agents/
 /.claude/
+/tdd-graph-plan/
+/tdd-graph-conflict-resolution/
