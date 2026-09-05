@@ -33,7 +33,7 @@ AGENTS = [
 ]
 
 PLACEHOLDER_MARKER = "TODO: REQUIRED-GUIDE"
-VALID_TYPES = ("file", "non-empty")
+VALID_TYPES = ("file", "non-empty", "contains", "heading")
 
 def _err(msg):
     print("[skill-pack] ERROR: " + msg)
@@ -148,10 +148,18 @@ def validate_flow(skill_dir):
                 _err("step %s validator 不是对象" % sid)
             vt = vv.get("type")
             if vt not in VALID_TYPES:
-                _err("step %s 未知 validator type: %r（仅 file/non-empty）" % (sid, vt))
+                _err("step %s 未知 validator type: %r（仅 file/non-empty/contains/heading）" % (sid, vt))
             vp = vv.get("path")
             if not vp or not isinstance(vp, str) or not vp.strip():
                 _err("step %s validator path 非空" % sid)
+            if vt in ("contains", "heading"):
+                pat = vv.get("pattern")
+                if not pat or not isinstance(pat, str) or not pat.strip():
+                    _err("step %s validator pattern 非空（type=%s）" % (sid, vt))
+                if vt == "heading" and vv.get("level") is not None:
+                    lv = vv.get("level")
+                    if not isinstance(lv, int) or lv < 1 or lv > 6:
+                        _err("step %s heading level 须为 1..=6" % sid)
     return flow.get("skill"), ids
 
 def build(skill, agents, make_zip, out_root):

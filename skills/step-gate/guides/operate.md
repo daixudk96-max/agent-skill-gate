@@ -2,7 +2,14 @@
 
 当前步骤为 operate（必达内容）。
 - 运行 tools/skill-converter.py <目标目录> <skill名> [--steps "id|标题|描述,..."] 生成母包。
-- 编辑 flow.yaml：为每步填 validators（file/non-empty）机器校验规则。
+- 编辑 flow.yaml：为每步填 validators 机器校验规则。类型：
+  - file：产物存在（path 相对工作目录）。
+  - non-empty：产物存在且非空白。
+  - contains：产物文本中含指定子串（字段校验）：
+    validators: [{type: contains, path: notes/requirements.md, pattern: repoRoot}]。
+  - heading：产物含指定级别的 Markdown ATX 标题（标题文本含 pattern），level 可选（缺省任意 1..=6，只认井号标题不认下划线）：
+    validators: [{type: heading, path: notes/requirements.md, level: 1, pattern: repoRoot}]。
+  选择原则：能机械验证的约束都用 validator 表达（存在性/非空/关键字段/标题结构），其余才写进 guide 让模型执行。
 - 若原 skill 含条件流程（"如果 X 就做 A，否则做 B"），用 branches 表达：
   branches: [{when: {type: file|non-empty|contains, path}, then: <step>}, {then: <else-step>}]；
   条件由程序判定（路径相对工作目录），未走备选自动标 skipped。
